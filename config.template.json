@@ -1,0 +1,10 @@
+{
+    "discord": {
+        "token": "",
+        "commandPrefix": ">",
+        "pollChannel":""
+    },
+    "colors": {
+        "embed":"#327da8"
+    }
+}
