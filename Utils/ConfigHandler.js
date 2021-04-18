@@ -5,7 +5,7 @@ let fs = require("fs");
 let path = require("path");
 
 // Utils
-let log = require("./logger");
+let log = require("./Logger");
 
 const packagefile = require(path.resolve("package.json"));
 const configPath  = path.resolve("config.json");
