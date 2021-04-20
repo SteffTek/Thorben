@@ -25,7 +25,7 @@ class CommandManager {
     }
 
     async handle(message) {
-        let args = message.content.split(" ");
+        let args = message.cleanContent.split(" ");
         let command = args[0].substring(1);
 
         //Remove First Entry
@@ -33,11 +33,18 @@ class CommandManager {
 
         //Fire Command
         try {
+            //GET COMMAND
+            let cmd_handler = this.getCommand(command);
+
+            if(cmd_handler == null) {
+                return;
+            }
+
             //DELETING ORIGINAL
             await message.delete({ timeout: 1000 }).catch(logger.error);
 
             //EXECUTING COMMAND
-            await this.getCommand(command).handle(message, args, async function(error) {
+            await cmd_handler.handle(message, args, async function(error) {
                 if(!error) {
                     return;
                 }

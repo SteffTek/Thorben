@@ -33,7 +33,8 @@ class Meme extends Command {
             .setAuthor(message.author.tag, message.author.avatarURL())
             .setColor(this.commandManager.config.colors.embed)
             .setTitle(meme.title)
-            .setImage(meme.preview[meme.preview.length - 1])
+            .setImage(meme.url)
+            .setURL(meme.postLink);
 
 
         //SENDING MESSAGE

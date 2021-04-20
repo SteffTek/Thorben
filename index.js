@@ -25,7 +25,7 @@ client.on('message', msg => {
 
     //CHECK CONTENT TYPE
     if(typeof msg.content == "string") {
-        let content = msg.content;
+        let content = msg.cleanContent;
 
         if(content.startsWith(">")) {
             //IF QUOTE, IGNORE

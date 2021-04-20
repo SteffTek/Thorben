@@ -12,10 +12,21 @@ class Mock extends Command {
     /*
         @param {Array} List of Arguments
     */
-    handle(message, args, callback) {
+    async handle(message, args, callback) {
 
         //SETUP STRING
-        let str = args.join(" ");
+        let str = args.join(" ").trim();
+
+        //CHECK IF MOCKED = EMPTY
+        // => GET QUOTED MESSAGE
+        if(str.length == 0) {
+            let reference = message.reference;
+            let ref_msg = await message.channel.messages.fetch(reference.messageID);
+
+            if(ref_msg != null) {
+                str = ref_msg.cleanContent;
+            }
+        }
 
         //MOCK STRING
         str = this.mocking(str);
