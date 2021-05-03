@@ -3,10 +3,14 @@ let moment = require("moment");
 
 //COMMANDS
 const Help = require("./Commands/Help");
+const About = require("./Commands/About");
 const Mock = require("./Commands/Mock");
 const Vote = require("./Commands/Vote");
 const Poll = require("./Commands/Poll");
 const Meme = require("./Commands/Meme");
+const Action = require("./Commands/Action");
+const Emotion = require("./Commands/Emotion");
+const GifList = require("./Commands/GifList");
 
 class CommandManager {
     constructor(config) {
@@ -18,10 +22,14 @@ class CommandManager {
 
         //ADD COMMANDS
         this.commands.push(new Help(this, "help","",""));
+        this.commands.push(new About(this, "about","Bot Credits",""));
         this.commands.push(new Mock(this, "mock","Text Mocking","<Text>"));
         this.commands.push(new Vote(this, "vote","Erstellt eine Ja/Nein/Neutral Umfrage.","<Frage>"));
         this.commands.push(new Poll(this, "poll","Erstellt eine Umfrage mit 2-10 Antworten.","<Frage>;<Antwort1>;<Antwort2>;..."));
         this.commands.push(new Meme(this, "meme","Holt ein Meme von Haha Funny Seite.","[Subreddit]"));
+        this.commands.push(new Action(this, "action","Führt eine Aktion mit einem Nutzer aus \n(_siehe ZeroTwo Bot ohne NSFW Krams du Schwein!_)","<Aktion> <@Nutzer>"));
+        this.commands.push(new Emotion(this, "emotion","Zeigt eine Emotion.","<Emotion>"));
+        this.commands.push(new GifList(this, "giflist","Zeigt alle verfügbaren Kategorien für **>action** und **>emotion** an.",""));
     }
 
     async handle(message) {
