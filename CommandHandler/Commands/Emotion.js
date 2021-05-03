@@ -42,8 +42,6 @@ class Meme extends Command {
         //SETUP STRING
         let emotion = args[0];
 
-        console.log(emotion);
-
         if(!categories.includes(emotion)) {
             return callback("Emotion konnte nicht gefunden werden!");
         }
