@@ -1,5 +1,6 @@
 {
-  "name": "utilsbot",
+  "name": "thorben",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
     "moment": "^2.29.1",
     "momentjs": "^2.0.0"
   }

@@ -1,49 +1,58 @@
-//IMPORTS
-const logger = require("./Utils/Logger");
-const configHandler = require("./Utils/ConfigHandler");
-const config = configHandler.getConfig();
+/**
+ * Imports
+ */
+import { REST, Routes, Client, GatewayIntentBits } from "discord.js";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from "dotenv";
 
-const CommandManager = require("./CommandHandler/CommandManager");
 
-const Discord = require('discord.js');
+import Logger from "./src/utils/logger.js";
+import EventManager from "./src/events/manager.js";
+import CommandManager from "./src/commands/manager.js";
 
-//VARS
-const commandManager = new CommandManager(config);
+/**
+ * Load Env
+ */
+dotenv.config();
 
-//DISCORD THINGS
-const client = new Discord.Client();
+/**
+ * Constants
+ */
+const TOKEN = process.env.DISCORD_TOKEN;
+const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-client.on('ready', () => {
-    logger.done(`Logged in as ${client.user.tag}!`);
-});
+/**
+ * Command Manager
+ */
+const commandManager = new CommandManager();
 
-client.on('message', msg => {
-    //REJECT DM CHANNEL
-    if(msg.channel.type != "text") {
-        return;
-    }
+/**
+ * Create Interactions
+ */
+const rest = new REST({ version: "10" }).setToken(TOKEN);
+try {
+    Logger.info('Started refreshing application (/) commands.');
+    await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commandManager.getCommands() });
+    Logger.done('Successfully reloaded application (/) commands.')
+} catch (error) {
+    Logger.error(error);
+    throw error;
+}
 
-    //CHECK CONTENT TYPE
-    if(typeof msg.content == "string") {
-        let content = msg.cleanContent;
+/**
+ * Create Client
+ */
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages] });
+client.commandManager = commandManager;
 
-        if(content.startsWith(">")) {
-            //IF QUOTE, IGNORE
-            if(content.startsWith("> ")) {
-                return;
-            }
+/**
+ * Event Manager
+ */
+EventManager(client);
 
-            //SEND TO COMMAND HANDLER
-            commandManager.handle(msg);
-        }
-
-        //CHECK IF BOT IS PINGED
-        if (msg.mentions.has(client.user.id)) {
-            msg.channel.send("Was pingst du mich du Hurensohn :angry:");
-        }
-    }
-});
-
-//SETUP
-logger.info("Setting up...");
-client.login(config.discord.token);
+/**
+ * Start Client
+ */
+client.login(TOKEN);
