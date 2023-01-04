@@ -27,6 +27,9 @@ export default {
         // Get Target Message
         const subreddit = interaction.options.getString("subreddit");
 
+        // Reply with "thinking"
+        await interaction.deferReply();
+
         const meme = await getMeme(subreddit);
 
         // Check Meme
@@ -43,7 +46,7 @@ export default {
 
 
         // Reply
-        interaction.reply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed] });
     }
 }
 
