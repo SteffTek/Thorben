@@ -78,5 +78,5 @@ const getMeme = async (subreddit) => {
  */
 const errorReply = (interaction, error) => {
     const embed = Embeds.errorEmbed(error);
-    interaction.reply({ embeds: [ embed ], ephemeral: true });
+    interaction.editReply({ embeds: [ embed ], ephemeral: true });
 }
