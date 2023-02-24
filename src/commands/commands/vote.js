@@ -25,7 +25,7 @@ export default {
      */
     execute: async (client, guild, interaction) => {
         // Get Targets
-        let question = interaction.options.getString("question").trim();
+        let question = interaction.options.getString("question")?.trim();
         // Check length
         if(question.length > 255) return errorReply(interaction, "Deine Frage ist leider zu lang (╯°Д°)╯︵/(.□ . \\) (Maximal 255 Zeichen)");
         // Create Embed

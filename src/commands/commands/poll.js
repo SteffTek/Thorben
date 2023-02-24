@@ -110,11 +110,11 @@ export default {
      */
     execute: async (client, guild, interaction) => {
         // Get Targets
-        let question = interaction.options.getString("question").trim();
+        let question = interaction.options.getString("question")?.trim();
         if(question.length > 255) return errorReply(interaction, "Sorry, aber deine Frage ist zu lang :[ (Maximal 255 Zeichen)");
         let answers = [];
         for(let i = 1; i < 10; i++) {
-            answers.push(interaction.options.getString(`answer${i}`).trim());
+            answers.push(interaction.options.getString(`answer${i}`)?.trim());
             // Check Length
             if(answers[i - 1].length > 255) {
                 return errorReply(interaction, `Sorry aber deine ${i}te Antwort ist zu lang :/ (Maximal 255 Zeichen)`);
