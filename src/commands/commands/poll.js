@@ -115,6 +115,7 @@ export default {
         let answers = [];
         for(let i = 1; i < 10; i++) {
             answers.push(interaction.options.getString(`answer${i}`)?.trim());
+            if(answers[i-1] == null) continue;
             // Check Length
             if(answers[i - 1].length > 255) {
                 return errorReply(interaction, `Sorry aber deine ${i}te Antwort ist zu lang :/ (Maximal 255 Zeichen)`);
