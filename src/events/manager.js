@@ -29,6 +29,8 @@ export default (client) => {
     // Ready Event
     client.on("ready", async () => {
         logger.done(`Client ${client.user.tag} successfully logged in!`);
+        // Log how many guilds the client is in
+        logger.info(`Client is part of ${client.guilds.cache.size} guilds.`);
     });
 
     // Discord Interactions
